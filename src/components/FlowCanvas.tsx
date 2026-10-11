@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import {
   Background,
   Controls,
@@ -20,6 +20,20 @@ interface FlowCanvasProps {
   onPick: (id: string) => void;
 }
 
+function useWideScreen(): boolean {
+  const [wide, setWide] = useState(() =>
+    typeof window === 'undefined' ? true : window.matchMedia('(min-width: 980px)').matches,
+  );
+  useEffect(() => {
+    const media = window.matchMedia('(min-width: 980px)');
+    const sync = () => setWide(media.matches);
+    sync();
+    media.addEventListener('change', sync);
+    return () => media.removeEventListener('change', sync);
+  }, []);
+  return wide;
+}
+
 function modeOf(id: string, step: StoryStep, used: Set<string>, seen: Set<string>): NodeMode {
   if (!used.has(id)) return 'skipped';
   if (step.hot.includes(id)) return 'hot';
@@ -29,6 +43,7 @@ function modeOf(id: string, step: StoryStep, used: Set<string>, seen: Set<string
 }
 
 export function FlowCanvas({ step, used, seen, seenEdges, focus, onPick }: FlowCanvasProps) {
+  const wide = useWideScreen();
   const nodes = useMemo<Node[]>(() => {
     const laneNodes: Node<LaneData, 'lane'>[] = lanes.map((lane) => ({
       id: lane.id,
@@ -110,8 +125,9 @@ export function FlowCanvas({ step, used, seen, seenEdges, focus, onPick }: FlowC
         nodes={nodes}
         edges={flowEdges}
         nodeTypes={nodeTypes}
-        fitView
+        fitView={wide}
         fitViewOptions={{ padding: 0.14 }}
+        defaultViewport={{ x: 16, y: 0, zoom: 0.58 }}
         minZoom={0.35}
         maxZoom={1.5}
         nodesDraggable={false}

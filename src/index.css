@@ -400,7 +400,7 @@ h1 {
   .top { grid-template-columns: 1fr; }
   .limit, .hint { margin-left: 0; }
   .workspace { grid-template-columns: 1fr; }
-  .flow-wrap { height: 680px; }
+  .flow-wrap { height: 70vh; min-height: 520px; }
   .panel { border-left: none; border-top: 1px solid var(--line); }
   h1 { font-size: 28px; }
 }
