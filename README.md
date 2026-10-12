@@ -14,7 +14,7 @@
 
 不包含 abort、pause、retry / recovery、maxSteps 失败、用户中断、steer 回注。
 
-静态站点，没有后端。Vite 的 `base` 是 `./`，`dist/` 可以直接放到 GitHub Pages。
+静态站点，没有后端。Vite 的 `base` 是 `./`，资源用相对路径，对应项目页 [https://missminga.github.io/harness-version/](https://missminga.github.io/harness-version/)。推送到 `main` 后，`.github/workflows/pages.yml` 会构建 `dist/` 并部署到 GitHub Pages。
 
 ## 脚本
 
@@ -55,7 +55,7 @@ After a prompt is submitted:
 
 Abort, pause, retry / recovery, maxSteps failure, user interrupt, and steer re-injection are not on this diagram.
 
-The site is static. Vite `base` is `./`, so `dist/` can be published on GitHub Pages.
+The site is static. Vite `base` is `./`, so asset URLs stay relative and load at [https://missminga.github.io/harness-version/](https://missminga.github.io/harness-version/). A push to `main` runs `.github/workflows/pages.yml`, which builds `dist/` and deploys GitHub Pages.
 
 ## Scripts
 
